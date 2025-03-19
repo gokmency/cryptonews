@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import SearchBar from "@/components/SearchBar";
 import FilterBar from "@/components/FilterBar";
 import NewsList from "@/components/NewsList";
+import CryptoTicker from "@/components/CryptoTicker";
 import { useNewsApi } from "@/hooks/useNewsApi";
 import { FilterOptions } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -66,7 +67,12 @@ const Index = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       
-      <main className="flex-1 pt-24 pb-10 px-4 md:px-10 max-w-7xl mx-auto w-full animate-fade-in">
+      {/* Kripto Para Ticker'ı */}
+      <div className="fixed top-[72px] left-0 right-0 z-40">
+        <CryptoTicker />
+      </div>
+      
+      <main className="flex-1 pt-24 pb-10 px-4 md:px-10 max-w-7xl mx-auto w-full animate-fade-in mt-8">
         <div className="space-y-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="flex items-center gap-2">
