@@ -9,8 +9,10 @@ import NewsList from "@/components/NewsList";
 import { useNewsApi } from "@/hooks/useNewsApi";
 import { FilterOptions } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Index = () => {
+  const { t } = useLanguage();
   const [filters, setFilters] = useState<FilterOptions>({
     sentiment: "",
     source: "",
@@ -52,9 +54,9 @@ const Index = () => {
         <div className="space-y-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-semibold tracking-tight">Crypto News</h1>
+              <h1 className="text-2xl font-semibold tracking-tight">{t("index.title")}</h1>
               <p className="text-muted-foreground">
-                The latest updates from the crypto world
+                {t("index.subtitle")}
               </p>
             </div>
             
@@ -74,7 +76,7 @@ const Index = () => {
                     isRefetching && "animate-spin"
                   )} 
                 />
-                Refresh
+                {t("button.refresh")}
               </Button>
             </div>
           </div>
@@ -92,13 +94,13 @@ const Index = () => {
           
           {isError && (
             <div className="text-center py-8">
-              <p className="text-destructive">Error loading news data. Please try again later.</p>
+              <p className="text-destructive">{t("error.loading")}</p>
               <Button 
                 variant="outline" 
                 className="mt-4"
                 onClick={() => refetch()}
               >
-                Retry
+                {t("button.retry")}
               </Button>
             </div>
           )}

@@ -1,11 +1,13 @@
 
 import { formatDistanceToNow } from "date-fns";
+import { tr } from "date-fns/locale";
 import { ExternalLink } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import BookmarkButton from "@/components/BookmarkButton";
 import { NewsItem } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface NewsCardProps {
   newsItem: NewsItem;
@@ -15,6 +17,7 @@ interface NewsCardProps {
 const NewsCard = ({ newsItem, className }: NewsCardProps) => {
   const { title, published_at, url, source, sentiment, votes } = newsItem;
   const domain = source?.domain || newsItem.domain;
+  const { language, t } = useLanguage();
   
   const handleCardClick = () => {
     window.open(url, "_blank", "noopener,noreferrer");
@@ -28,6 +31,17 @@ const NewsCard = ({ newsItem, className }: NewsCardProps) => {
         return "bg-red-100 text-red-800 dark:bg-red-800/20 dark:text-red-300";
       default:
         return "bg-gray-100 text-gray-800 dark:bg-gray-800/20 dark:text-gray-300";
+    }
+  };
+
+  const getSentimentLabel = (sentiment: string | undefined) => {
+    switch (sentiment) {
+      case "positive":
+        return t("sentiment.positive");
+      case "negative":
+        return t("sentiment.negative");
+      default:
+        return t("sentiment.neutral");
     }
   };
 
@@ -48,7 +62,7 @@ const NewsCard = ({ newsItem, className }: NewsCardProps) => {
               getSentimentColor(sentiment)
             )}
           >
-            {sentiment || "neutral"}
+            {getSentimentLabel(sentiment)}
           </Badge>
           <BookmarkButton newsItem={newsItem} size="sm" />
         </div>
@@ -60,7 +74,12 @@ const NewsCard = ({ newsItem, className }: NewsCardProps) => {
         <div className="flex items-center text-xs text-muted-foreground">
           <span className="truncate max-w-[180px]">{domain}</span>
           <span className="mx-1">•</span>
-          <span>{formatDistanceToNow(new Date(published_at), { addSuffix: true })}</span>
+          <span>
+            {formatDistanceToNow(new Date(published_at), { 
+              addSuffix: true,
+              locale: language === 'tr' ? tr : undefined
+            })}
+          </span>
         </div>
       </CardContent>
       
@@ -75,7 +94,7 @@ const NewsCard = ({ newsItem, className }: NewsCardProps) => {
         </div>
         
         <div className="flex items-center text-xs text-muted-foreground hover:text-foreground transition-colors">
-          <span className="mr-1">Read</span>
+          <span className="mr-1">{t("button.read")}</span>
           <ExternalLink className="h-3 w-3" />
         </div>
       </CardFooter>

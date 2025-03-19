@@ -1,14 +1,18 @@
 
 import { Link, useLocation } from "react-router-dom";
-import { Bookmark, LayoutDashboard, Menu, X } from "lucide-react";
+import { Bookmark, LayoutDashboard, Menu, Moon, Sun, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
+import { useTheme } from "@/contexts/ThemeContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Header = () => {
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isDarkMode, toggleTheme } = useTheme();
+  const { language, setLanguage, t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,7 +50,7 @@ const Header = () => {
               <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
             </svg>
           </div>
-          <h1 className="text-xl font-medium tracking-tight hidden md:block">CryptoVibe</h1>
+          <h1 className="text-xl font-medium tracking-tight hidden md:block">{t("app.name")}</h1>
         </Link>
 
         {/* Desktop Navigation */}
@@ -62,7 +66,7 @@ const Header = () => {
           >
             <Link to="/" className="flex items-center space-x-2">
               <LayoutDashboard className="h-4 w-4" />
-              <span>Dashboard</span>
+              <span>{t("nav.dashboard")}</span>
             </Link>
           </Button>
           <Button
@@ -76,20 +80,55 @@ const Header = () => {
           >
             <Link to="/bookmarks" className="flex items-center space-x-2">
               <Bookmark className="h-4 w-4" />
-              <span>Bookmarks</span>
+              <span>{t("nav.bookmarks")}</span>
             </Link>
+          </Button>
+          
+          {/* Theme Toggle */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full h-8 w-8"
+            onClick={toggleTheme}
+            aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+          >
+            {isDarkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </Button>
+          
+          {/* Language Toggle */}
+          <Button
+            variant="ghost"
+            size="sm"
+            className="rounded-full h-8"
+            onClick={() => setLanguage(language === 'en' ? 'tr' : 'en')}
+          >
+            <span className="font-medium">{language === 'en' ? 'TR' : 'EN'}</span>
           </Button>
         </nav>
 
         {/* Mobile Menu Button */}
-        <Button 
-          variant="ghost" 
-          size="icon" 
-          className="md:hidden" 
-          onClick={toggleMenu}
-        >
-          {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </Button>
+        <div className="flex items-center gap-2 md:hidden">
+          {/* Theme Toggle Mobile */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full h-8 w-8"
+            onClick={toggleTheme}
+            aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+          >
+            {isDarkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </Button>
+          
+          {/* Menu Toggle */}
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="h-8 w-8" 
+            onClick={toggleMenu}
+          >
+            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </Button>
+        </div>
 
         {/* Mobile Navigation */}
         <div className={cn(
@@ -109,7 +148,7 @@ const Header = () => {
             >
               <Link to="/" className="flex items-center justify-center space-x-2">
                 <LayoutDashboard className="h-5 w-5" />
-                <span className="text-lg">Dashboard</span>
+                <span className="text-lg">{t("nav.dashboard")}</span>
               </Link>
             </Button>
             <Button
@@ -124,8 +163,21 @@ const Header = () => {
             >
               <Link to="/bookmarks" className="flex items-center justify-center space-x-2">
                 <Bookmark className="h-5 w-5" />
-                <span className="text-lg">Bookmarks</span>
+                <span className="text-lg">{t("nav.bookmarks")}</span>
               </Link>
+            </Button>
+            
+            {/* Language Toggle Mobile */}
+            <Button
+              variant="outline"
+              size="lg"
+              className="rounded-full w-48"
+              onClick={() => {
+                setLanguage(language === 'en' ? 'tr' : 'en');
+                toggleMenu();
+              }}
+            >
+              <span className="font-medium">{language === 'en' ? 'Türkçe' : 'English'}</span>
             </Button>
           </div>
         </div>

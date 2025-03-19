@@ -9,6 +9,10 @@ const fetchNews = async (filters: FilterOptions): Promise<NewsItem[]> => {
     const params = new URLSearchParams({
       auth_token: API_KEY,
       public: "true",
+      // Enhanced API parameters
+      currencies: "bitcoin,ethereum,litecoin,ripple", // Get news for major cryptocurrencies
+      regions: "en,tr", // Include English and Turkish news
+      kind: "news", // Only news, not posts or tweets
     });
 
     if (filters.period) {
@@ -67,5 +71,7 @@ export const useNewsApi = (filters: FilterOptions) => {
     queryFn: () => fetchNews(filters),
     refetchInterval: 15 * 60 * 1000, // Refetch every 15 minutes
     staleTime: 5 * 60 * 1000, // Consider data stale after 5 minutes
+    refetchOnWindowFocus: true, // Refetch when window regains focus
+    retry: 3, // Retry failed requests 3 times
   });
 };

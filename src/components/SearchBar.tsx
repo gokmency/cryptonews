@@ -4,6 +4,7 @@ import { Search, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface SearchBarProps {
   onSearch: (term: string) => void;
@@ -14,6 +15,7 @@ interface SearchBarProps {
 const SearchBar = ({ onSearch, initialValue = "", className }: SearchBarProps) => {
   const [searchTerm, setSearchTerm] = useState(initialValue);
   const [isFocused, setIsFocused] = useState(false);
+  const { t } = useLanguage();
   
   // Update local state when initialValue changes
   useEffect(() => {
@@ -46,7 +48,7 @@ const SearchBar = ({ onSearch, initialValue = "", className }: SearchBarProps) =
       <Search className="absolute left-3 h-4 w-4 text-muted-foreground" />
       <Input
         type="text"
-        placeholder="Search news..."
+        placeholder={t("search.placeholder")}
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         onKeyDown={handleKeyDown}
@@ -70,7 +72,7 @@ const SearchBar = ({ onSearch, initialValue = "", className }: SearchBarProps) =
         className="absolute right-2 text-muted-foreground hover:text-foreground"
         onClick={handleSearch}
       >
-        Search
+        {t("search.button")}
       </Button>
     </div>
   );

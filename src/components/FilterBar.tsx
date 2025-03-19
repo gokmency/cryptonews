@@ -11,9 +11,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { SENTIMENTS, TIME_PERIODS, NEWS_SOURCES } from "@/lib/constants";
+import { getSentiments, getTimePeriods, getNewsSources } from "@/lib/constants";
 import { FilterOptions } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface FilterBarProps {
   filters: FilterOptions;
@@ -23,6 +24,11 @@ interface FilterBarProps {
 
 const FilterBar = ({ filters, onFilterChange, className }: FilterBarProps) => {
   const [open, setOpen] = useState(false);
+  const { language, t } = useLanguage();
+  
+  const SENTIMENTS = getSentiments(language);
+  const TIME_PERIODS = getTimePeriods(language);
+  const NEWS_SOURCES = getNewsSources(language);
   
   const activeFiltersCount = [
     filters.sentiment,
@@ -43,7 +49,7 @@ const FilterBar = ({ filters, onFilterChange, className }: FilterBarProps) => {
               filters.sentiment && "bg-secondary"
             )}
           >
-            <span>Sentiment</span>
+            <span>{t("filter.sentiment")}</span>
             {filters.sentiment && (
               <span className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
                 ✓
@@ -52,7 +58,7 @@ const FilterBar = ({ filters, onFilterChange, className }: FilterBarProps) => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start" className="w-56 animate-fade-in">
-          <DropdownMenuLabel>Filter by Sentiment</DropdownMenuLabel>
+          <DropdownMenuLabel>{t("filter.sentiment")}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuRadioGroup 
             value={filters.sentiment} 
@@ -82,7 +88,7 @@ const FilterBar = ({ filters, onFilterChange, className }: FilterBarProps) => {
               filters.source && "bg-secondary"
             )}
           >
-            <span>Source</span>
+            <span>{t("filter.source")}</span>
             {filters.source && (
               <span className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
                 ✓
@@ -91,7 +97,7 @@ const FilterBar = ({ filters, onFilterChange, className }: FilterBarProps) => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start" className="w-56 animate-fade-in">
-          <DropdownMenuLabel>Filter by Source</DropdownMenuLabel>
+          <DropdownMenuLabel>{t("filter.source")}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuRadioGroup 
             value={filters.source} 
@@ -121,7 +127,7 @@ const FilterBar = ({ filters, onFilterChange, className }: FilterBarProps) => {
               filters.period && "bg-secondary"
             )}
           >
-            <span>Time</span>
+            <span>{t("filter.time")}</span>
             {filters.period && (
               <span className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
                 ✓
@@ -130,7 +136,7 @@ const FilterBar = ({ filters, onFilterChange, className }: FilterBarProps) => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start" className="w-56 animate-fade-in">
-          <DropdownMenuLabel>Filter by Time</DropdownMenuLabel>
+          <DropdownMenuLabel>{t("filter.time")}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuRadioGroup 
             value={filters.period} 
@@ -158,7 +164,7 @@ const FilterBar = ({ filters, onFilterChange, className }: FilterBarProps) => {
             className="rounded-full h-9 font-normal md:hidden"
           >
             <Filter className="mr-2 h-4 w-4" />
-            <span>Filters</span>
+            <span>{t("filter.filters")}</span>
             {activeFiltersCount > 0 && (
               <span className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
                 {activeFiltersCount}
@@ -167,11 +173,11 @@ const FilterBar = ({ filters, onFilterChange, className }: FilterBarProps) => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-72 animate-fade-in">
-          <DropdownMenuLabel>All Filters</DropdownMenuLabel>
+          <DropdownMenuLabel>{t("filter.filters")}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           
           <div className="p-2">
-            <h3 className="text-sm font-medium mb-2">Sentiment</h3>
+            <h3 className="text-sm font-medium mb-2">{t("filter.sentiment")}</h3>
             <div className="flex flex-wrap gap-1 mb-4">
               {SENTIMENTS.map((sentiment) => (
                 <Button
@@ -191,7 +197,7 @@ const FilterBar = ({ filters, onFilterChange, className }: FilterBarProps) => {
               ))}
             </div>
             
-            <h3 className="text-sm font-medium mb-2">Source</h3>
+            <h3 className="text-sm font-medium mb-2">{t("filter.source")}</h3>
             <div className="flex flex-wrap gap-1 mb-4">
               {NEWS_SOURCES.map((source) => (
                 <Button
@@ -211,7 +217,7 @@ const FilterBar = ({ filters, onFilterChange, className }: FilterBarProps) => {
               ))}
             </div>
             
-            <h3 className="text-sm font-medium mb-2">Time Period</h3>
+            <h3 className="text-sm font-medium mb-2">{t("filter.time")}</h3>
             <div className="flex flex-wrap gap-1">
               {TIME_PERIODS.map((period) => (
                 <Button
@@ -246,13 +252,13 @@ const FilterBar = ({ filters, onFilterChange, className }: FilterBarProps) => {
                 setOpen(false);
               }}
             >
-              Reset All
+              {t("filter.reset")}
             </Button>
             <Button
               size="sm"
               onClick={() => setOpen(false)}
             >
-              Apply Filters
+              {t("filter.apply")}
             </Button>
           </div>
         </DropdownMenuContent>
@@ -272,7 +278,7 @@ const FilterBar = ({ filters, onFilterChange, className }: FilterBarProps) => {
             })
           }
         >
-          Clear All
+          {t("filter.clearAll")}
         </Button>
       )}
     </div>

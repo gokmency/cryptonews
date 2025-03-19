@@ -1,6 +1,6 @@
 
 import { useState, useCallback } from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Bookmark } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
@@ -9,9 +9,11 @@ import FilterBar from "@/components/FilterBar";
 import NewsList from "@/components/NewsList";
 import { useBookmarks } from "@/hooks/useBookmarks";
 import { FilterOptions, NewsItem } from "@/lib/types";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const BookmarkedNews = () => {
   const { bookmarks } = useBookmarks();
+  const { t } = useLanguage();
   
   const [filters, setFilters] = useState<FilterOptions>({
     sentiment: "",
@@ -75,9 +77,9 @@ const BookmarkedNews = () => {
                 </Link>
               </Button>
               <div>
-                <h1 className="text-2xl font-semibold tracking-tight">Bookmarked News</h1>
+                <h1 className="text-2xl font-semibold tracking-tight">{t("bookmarks.title")}</h1>
                 <p className="text-muted-foreground">
-                  Your saved crypto news articles
+                  {t("bookmarks.subtitle")}
                 </p>
               </div>
             </div>
@@ -95,12 +97,12 @@ const BookmarkedNews = () => {
               <div className="bg-muted rounded-full p-4 mb-4">
                 <Bookmark className="h-6 w-6 text-muted-foreground" />
               </div>
-              <h3 className="text-lg font-medium mb-1">No bookmarks yet</h3>
+              <h3 className="text-lg font-medium mb-1">{t("empty.bookmarks.title")}</h3>
               <p className="text-muted-foreground text-sm max-w-md">
-                You haven't bookmarked any articles yet. Navigate to the dashboard and bookmark articles to see them here.
+                {t("empty.bookmarks.description")}
               </p>
               <Button className="mt-4" asChild>
-                <Link to="/">Browse News</Link>
+                <Link to="/">{t("button.browseNews")}</Link>
               </Button>
             </div>
           ) : (

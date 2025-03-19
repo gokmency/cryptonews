@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useBookmarks } from "@/hooks/useBookmarks";
 import { NewsItem } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface BookmarkButtonProps {
   newsItem: NewsItem;
@@ -13,6 +14,7 @@ interface BookmarkButtonProps {
 
 const BookmarkButton = ({ newsItem, className, size = "default" }: BookmarkButtonProps) => {
   const { isBookmarked, toggleBookmark } = useBookmarks();
+  const { t } = useLanguage();
   const bookmarked = isBookmarked(newsItem.id);
 
   return (
@@ -38,7 +40,7 @@ const BookmarkButton = ({ newsItem, className, size = "default" }: BookmarkButto
           bookmarked && "fill-current"
         )} 
       />
-      {size !== "sm" && <span>{bookmarked ? "Bookmarked" : "Bookmark"}</span>}
+      {size !== "sm" && <span>{bookmarked ? t("button.bookmarked") : t("button.bookmark")}</span>}
     </Button>
   );
 };
