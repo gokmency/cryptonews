@@ -1,6 +1,6 @@
 
 import { useState, useCallback, useEffect } from "react";
-import { Bookmark, RefreshCw } from "lucide-react";
+import { Bookmark, RefreshCw, Newspaper } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import SearchBar from "@/components/SearchBar";
@@ -10,6 +10,7 @@ import { useNewsApi } from "@/hooks/useNewsApi";
 import { FilterOptions } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { toast } from "sonner";
 
 const Index = () => {
   const { t } = useLanguage();
@@ -21,8 +22,18 @@ const Index = () => {
   });
   
   const [showScrollButton, setShowScrollButton] = useState(false);
+  const [showSampleNews, setShowSampleNews] = useState(false);
   
   const { data: news, isLoading, isError, refetch, isRefetching } = useNewsApi(filters);
+  
+  // Gerçek haberler yoksa ve yükleme bittiğinde örnek haberler göster
+  useEffect(() => {
+    if (!isLoading && (!news || news.length === 0)) {
+      setShowSampleNews(true);
+    } else if (news && news.length > 0) {
+      setShowSampleNews(false);
+    }
+  }, [isLoading, news]);
   
   // Update scroll button visibility
   useEffect(() => {
@@ -42,6 +53,11 @@ const Index = () => {
     setFilters(prev => ({ ...prev, search: searchTerm }));
   }, []);
   
+  const handleRefresh = () => {
+    toast.info(t("news.refreshing"));
+    refetch();
+  };
+  
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -53,11 +69,14 @@ const Index = () => {
       <main className="flex-1 pt-24 pb-10 px-4 md:px-10 max-w-7xl mx-auto w-full animate-fade-in">
         <div className="space-y-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-              <h1 className="text-2xl font-semibold tracking-tight">{t("index.title")}</h1>
-              <p className="text-muted-foreground">
-                {t("index.subtitle")}
-              </p>
+            <div className="flex items-center gap-2">
+              <Newspaper className="h-6 w-6 text-primary" />
+              <div>
+                <h1 className="text-2xl font-semibold tracking-tight">{t("index.title")}</h1>
+                <p className="text-muted-foreground">
+                  {t("index.subtitle")}
+                </p>
+              </div>
             </div>
             
             <div className="flex flex-col sm:flex-row gap-3 sm:items-center w-full md:w-auto">
@@ -67,7 +86,7 @@ const Index = () => {
                 variant="outline" 
                 size="sm" 
                 className="rounded-full h-10 btn-hover ml-auto sm:ml-0"
-                onClick={() => refetch()}
+                onClick={handleRefresh}
                 disabled={isRefetching}
               >
                 <RefreshCw 
@@ -90,6 +109,7 @@ const Index = () => {
             news={news || []} 
             isLoading={isLoading} 
             className="mb-10"
+            showSampleNews={showSampleNews}
           />
           
           {isError && (

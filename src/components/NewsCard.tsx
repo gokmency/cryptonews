@@ -1,7 +1,7 @@
 
 import { formatDistanceToNow } from "date-fns";
 import { tr } from "date-fns/locale";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, ThumbsUp, ThumbsDown } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import BookmarkButton from "@/components/BookmarkButton";
@@ -15,7 +15,7 @@ interface NewsCardProps {
 }
 
 const NewsCard = ({ newsItem, className }: NewsCardProps) => {
-  const { title, published_at, url, source, sentiment, votes } = newsItem;
+  const { title, published_at, url, source, sentiment, votes, description } = newsItem;
   const domain = source?.domain || newsItem.domain;
   const { language, t } = useLanguage();
   
@@ -48,7 +48,7 @@ const NewsCard = ({ newsItem, className }: NewsCardProps) => {
   return (
     <Card
       className={cn(
-        "overflow-hidden cursor-pointer card-hover animate-fade-in",
+        "overflow-hidden cursor-pointer card-hover animate-fade-in border-border/50 dark:hover:border-primary/30",
         className
       )}
       onClick={handleCardClick}
@@ -71,6 +71,10 @@ const NewsCard = ({ newsItem, className }: NewsCardProps) => {
           {title}
         </h3>
         
+        {description && (
+          <p className="text-sm text-muted-foreground line-clamp-2 mb-2">{description}</p>
+        )}
+        
         <div className="flex items-center text-xs text-muted-foreground">
           <span className="truncate max-w-[180px]">{domain}</span>
           <span className="mx-1">•</span>
@@ -84,12 +88,12 @@ const NewsCard = ({ newsItem, className }: NewsCardProps) => {
       </CardContent>
       
       <CardFooter className="p-4 pt-2 flex justify-between items-center">
-        <div className="flex items-center space-x-2 text-xs">
-          <span className="flex items-center">
-            <span className="text-green-500 mr-1">↑</span> {votes.positive || 0}
+        <div className="flex items-center space-x-3 text-xs">
+          <span className="flex items-center gap-1">
+            <ThumbsUp className="h-3 w-3 text-green-500" /> {votes.positive || 0}
           </span>
-          <span className="flex items-center">
-            <span className="text-red-500 mr-1">↓</span> {votes.negative || 0}
+          <span className="flex items-center gap-1">
+            <ThumbsDown className="h-3 w-3 text-red-500" /> {votes.negative || 0}
           </span>
         </div>
         
