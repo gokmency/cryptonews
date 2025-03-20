@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "buildCommand": "npm install --legacy-peer-deps && npm run build",
+  "installCommand": "npm install --legacy-peer-deps",
+  "framework": "vite",
+  "env": {
+    "VITE_APP_NAME": "Kripto Haberleri Beta",
+    "VITE_DEFAULT_LANGUAGE": "tr"
+  }
+} 
