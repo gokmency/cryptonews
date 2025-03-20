@@ -1,4 +1,3 @@
-
 export interface NewsItem {
   id: number;
   title: string;
@@ -32,10 +31,12 @@ export interface NewsItem {
   created_at: string;
   kind: string;
   published_at_unix?: number;
-  sentiment?: "positive" | "negative" | "neutral";
   metadata?: {
-    image: string | null;
+    image?: string;
+    tags?: string[];
+    author?: string;
   };
+  sentiment?: string;
 }
 
 export interface NewsApiResponse {
@@ -45,12 +46,20 @@ export interface NewsApiResponse {
   results: NewsItem[];
 }
 
-export type FilterOptions = {
-  sentiment: string;
-  source: string;
-  period: string;
-  search: string;
+// Dil için tip tanımı (Türkçe ve İngilizce)
+export type Language = 'en' | 'tr';
+
+// Dil tabanlı içerik haritalaması için jenerik tip
+export type LanguageMap<T> = {
+  [key in Language]: T;
 };
+
+// Filtreleme seçenekleri
+export interface FilterOptions {
+  period?: string;
+  source?: string;
+  search?: string;
+}
 
 export type BookmarkStore = {
   bookmarks: NewsItem[];

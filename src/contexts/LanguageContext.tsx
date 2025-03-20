@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 interface LanguageContextType {
@@ -20,7 +19,6 @@ export const translations = {
     
     // Main sections
     "index.title": "Crypto News",
-    "index.subtitle": "The latest updates from the crypto world",
     "bookmarks.title": "Bookmarked News",
     "bookmarks.subtitle": "Your saved crypto news articles",
     
@@ -75,7 +73,6 @@ export const translations = {
     
     // Main sections
     "index.title": "Kripto Haberleri",
-    "index.subtitle": "Kripto dünyasından en güncel gelişmeler",
     "bookmarks.title": "Kaydedilen Haberler",
     "bookmarks.subtitle": "Kaydettiğiniz kripto haber makaleleri",
     

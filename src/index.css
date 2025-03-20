@@ -1,87 +1,88 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 210 20% 98%;
-    --foreground: 220 20% 16%;
+    /* Pastel krem temalı renkler */
+    --background: 40 30% 96%; /* Krem tonlarında bir arka plan */
+    --foreground: 35 25% 15%; /* Koyu kahve tonlarında metin */
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 20% 16%;
+    --card: 38 30% 98%; /* Hafif krem rengi kartlar */
+    --card-foreground: 35 25% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 16%;
+    --popover: 38 30% 98%;
+    --popover-foreground: 35 25% 15%;
 
-    --primary: 210 100% 50%;
+    --primary: 210 90% 50%; /* Mavi tonu biraz daha canlı */
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 20% 96%;
-    --secondary-foreground: 220 20% 16%;
+    --secondary: 35 20% 93%; /* Krem tonlarında ikincil renk */
+    --secondary-foreground: 35 25% 15%;
 
-    --muted: 210 20% 96%;
-    --muted-foreground: 220 10% 40%;
+    --muted: 35 20% 93%;
+    --muted-foreground: 35 15% 35%; /* Daha yumuşak muted renkler */
 
-    --accent: 210 20% 96%;
-    --accent-foreground: 220 20% 16%;
+    --accent: 25 70% 90%; /* Hafif turuncu aksan */
+    --accent-foreground: 25 80% 25%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 210 100% 50%;
+    --border: 35 15% 85%; /* Daha yumuşak sınır renkleri */
+    --input: 35 15% 85%;
+    --ring: 210 90% 50%;
 
     --radius: 1rem;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-background: 35 25% 95%; /* Krem sidebar arka planı */
+    --sidebar-foreground: 35 25% 20%;
+    --sidebar-primary: 210 90% 50%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 35 20% 90%;
+    --sidebar-accent-foreground: 35 25% 20%;
+    --sidebar-border: 35 15% 85%;
+    --sidebar-ring: 210 90% 50%;
   }
 
   .dark {
-    --background: 220 20% 4%;
-    --foreground: 210 20% 98%;
+    /* Daha açık siyah tonları ve daha iyi kontrast */
+    --background: 220 20% 10%; /* Daha açık siyah arkaplan */
+    --foreground: 210 25% 98%; /* Daha net görünüm için biraz daha beyaz metin */
 
-    --card: 220 20% 8%;
-    --card-foreground: 210 20% 98%;
+    --card: 220 20% 13%; /* Daha açık kart arka planı */
+    --card-foreground: 210 25% 98%;
 
-    --popover: 220 20% 8%;
-    --popover-foreground: 210 20% 98%;
+    --popover: 220 20% 13%;
+    --popover-foreground: 210 25% 98%;
 
-    --primary: 210 100% 50%;
-    --primary-foreground: 210 20% 98%;
+    --primary: 210 100% 55%; /* Daha parlak mavi */
+    --primary-foreground: 210 25% 98%;
 
-    --secondary: 220 20% 12%;
-    --secondary-foreground: 210 20% 98%;
+    --secondary: 220 20% 16%; /* Daha açık ikincil renk */
+    --secondary-foreground: 210 25% 98%;
 
-    --muted: 220 20% 12%;
-    --muted-foreground: 220 10% 70%;
+    --muted: 220 20% 16%;
+    --muted-foreground: 220 15% 80%; /* Daha görünür muted metin */
 
-    --accent: 220 20% 12%;
-    --accent-foreground: 210 20% 98%;
+    --accent: 220 20% 16%;
+    --accent-foreground: 210 25% 98%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 20% 98%;
+    --destructive: 0 70% 35%;
+    --destructive-foreground: 210 25% 98%;
 
-    --border: 220 20% 16%;
-    --input: 220 20% 16%;
-    --ring: 210 100% 50%;
+    --border: 220 20% 20%; /* Daha görünür sınırlar */
+    --input: 220 20% 20%;
+    --ring: 210 100% 55%;
 
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-background: 220 15% 14%; /* Daha açık sidebar arka planı */
+    --sidebar-foreground: 220 15% 95%;
+    --sidebar-primary: 224 76% 52%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 220 15% 20%;
+    --sidebar-accent-foreground: 220 15% 95%;
+    --sidebar-border: 220 15% 20%;
+    --sidebar-ring: 217 91% 60%;
   }
 }
 
@@ -90,15 +91,38 @@
     @apply border-border;
   }
 
+  html {
+    @apply overflow-y-scroll overflow-x-hidden;
+    width: 100vw;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv03";
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: hidden; /* body'de scroll'u engelle, sadece html'de olsun */
   }
-
-  html, body, #root {
+  
+  #root {
     height: 100%;
     width: 100%;
     overflow-x: hidden;
+    overflow-y: auto; /* Scroll özelliği sadece #root içinde olsun */
+    position: relative;
+  }
+  
+  /* Position fixed elemanlar için düzeltme */
+  body .fixed {
+    position: fixed;
+    /* position: fixed elemanlarının html scroll ile doğru çalışması için */
+    z-index: 50;
   }
   
   ::-webkit-scrollbar {
@@ -116,6 +140,12 @@
 
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-muted-foreground/50;
+  }
+
+  /* DropdownMenu'lerin düzgün çalışması için düzeltme */
+  [data-radix-popper-content-wrapper] {
+    position: absolute !important; 
+    z-index: 100 !important;
   }
 }
 
@@ -135,10 +165,103 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  /* Yeni eklenmiş kart stilleri */
+  .card-soft {
+    @apply bg-card border border-border/40 shadow-sm rounded-xl p-4 hover:shadow-md transition-all duration-300;
+  }
+
+  /* Yumuşak buton stilleri */
+  .btn-soft {
+    @apply rounded-lg transition-all duration-200 active:scale-95 font-medium;
+  }
+
+  /* İyileştirilmiş cam efekti */
+  .glass-cream {
+    @apply bg-background/80 backdrop-blur-md border border-accent/20 shadow-sm;
+  }
+
+  /* Dark mode için özel cam efekti */
+  .dark .glass-cream {
+    @apply bg-background/90 backdrop-blur-md border-border/30;
+  }
 }
 
 @layer utilities {
   .text-shadow-sm {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
+
+  /* Yumuşak gölgeler */
+  .shadow-soft {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05), 0 2px 5px rgba(0, 0, 0, 0.03);
+  }
+
+  /* Dark mode için gölge ayarı */
+  .dark .shadow-soft {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2), 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  /* İçe gömülmüş görünüm için */
+  .inset-effect {
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Dark mode için içe gömülmüş görünüm */
+  .dark .inset-effect {
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: inline-flex;
+  animation: marquee 30s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Dropdown açılırken taşmaların önlenmesi için */
+.overflow-fix * {
+  transform: none !important;
+}
+
+/* Animasyon düzeltmeleri */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-in-out;
+}
+
+/* Hafif sallanma animasyonu */
+@keyframes gentle-swing {
+  0%, 100% { transform: rotate(-1deg); }
+  50% { transform: rotate(1deg); }
+}
+
+.animate-gentle-swing {
+  animation: gentle-swing 3s ease-in-out infinite;
+  transform-origin: center center;
 }

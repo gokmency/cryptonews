@@ -1,12 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>crypto-vibe-aggregator</title>
-    <meta name="description" content="Lovable Generated Project" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Kripto haberleri</title>
+    <meta name="description" content="Kripto para haberleri, analizler ve fiyatlar" />
     <meta name="author" content="Lovable" />
     <meta property="og:image" content="/og-image.png" />
+    <style>
+      /* Sayfa yüklenmeden önce çift scroll'u önle */
+      html {
+        overflow-y: scroll;
+        overflow-x: hidden;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+      #root {
+        min-height: 100vh;
+        width: 100%;
+      }
+    </style>
   </head>
 
   <body>

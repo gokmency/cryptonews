@@ -1,4 +1,3 @@
-
 import { Link, useLocation } from "react-router-dom";
 import { Bookmark, LayoutDashboard, Menu, Moon, Sun, X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -12,7 +11,7 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isDarkMode, toggleTheme } = useTheme();
-  const { language, setLanguage, t } = useLanguage();
+  const { language, setLanguage } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,13 +29,13 @@ const Header = () => {
   return (
     <header 
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 py-4 md:px-10",
-        isScrolled ? "glass shadow-sm" : "bg-transparent"
+        "sticky top-0 left-0 right-0 z-40 transition-all duration-300 px-6 py-3 glass-cream",
+        isScrolled && "shadow-soft"
       )}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <Link to="/" className="flex items-center space-x-3">
-          <div className="bg-primary rounded-full p-2">
+        <Link to="/" className="flex items-center space-x-3 group">
+          <div className="bg-gradient-to-br from-primary to-primary/70 rounded-full p-2.5 shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all duration-300 border border-primary/20">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -45,42 +44,53 @@ const Header = () => {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="h-5 w-5 text-primary-foreground"
+              className="h-5 w-5 text-primary-foreground animate-gentle-swing"
             >
               <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
             </svg>
           </div>
-          <h1 className="text-xl font-medium tracking-tight hidden md:block">{t("app.name")}</h1>
+          <div className="hidden md:block">
+            <h1 className="text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors duration-300 flex items-center">
+              Kripto Haberleri
+              <span className="ml-2 bg-gradient-to-r from-primary/80 to-primary text-white text-xs px-2 py-0.5 rounded-md font-medium shadow-sm transform -rotate-2">
+                Beta
+              </span>
+            </h1>
+          </div>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-1">
+        <nav className="hidden md:flex items-center space-x-2">
           <Button
             variant="ghost"
             size="sm"
             className={cn(
-              "rounded-full transition-all",
-              isActive("/") ? "bg-secondary text-foreground" : "hover:bg-background/80"
+              "rounded-xl btn-soft",
+              isActive("/") 
+                ? "bg-secondary text-foreground shadow-soft" 
+                : "hover:bg-secondary/50"
             )}
             asChild
           >
             <Link to="/" className="flex items-center space-x-2">
               <LayoutDashboard className="h-4 w-4" />
-              <span>{t("nav.dashboard")}</span>
+              <span>{language === 'tr' ? 'Ana Sayfa' : 'Dashboard'}</span>
             </Link>
           </Button>
           <Button
             variant="ghost"
             size="sm"
             className={cn(
-              "rounded-full transition-all",
-              isActive("/bookmarks") ? "bg-secondary text-foreground" : "hover:bg-background/80"
+              "rounded-xl btn-soft",
+              isActive("/bookmarks") 
+                ? "bg-secondary text-foreground shadow-soft" 
+                : "hover:bg-secondary/50"
             )}
             asChild
           >
             <Link to="/bookmarks" className="flex items-center space-x-2">
               <Bookmark className="h-4 w-4" />
-              <span>{t("nav.bookmarks")}</span>
+              <span>{language === 'tr' ? 'Yer İmleri' : 'Bookmarks'}</span>
             </Link>
           </Button>
           
@@ -88,7 +98,7 @@ const Header = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="rounded-full h-8 w-8"
+            className="rounded-xl h-9 w-9 text-foreground/80 hover:text-foreground btn-soft"
             onClick={toggleTheme}
             aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
           >
@@ -97,9 +107,9 @@ const Header = () => {
           
           {/* Language Toggle */}
           <Button
-            variant="ghost"
+            variant="outline"
             size="sm"
-            className="rounded-full h-8"
+            className="rounded-xl btn-soft border border-border/50 hover:border-accent/50 hover:bg-accent/20"
             onClick={() => setLanguage(language === 'en' ? 'tr' : 'en')}
           >
             <span className="font-medium">{language === 'en' ? 'TR' : 'EN'}</span>
@@ -112,7 +122,7 @@ const Header = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="rounded-full h-8 w-8"
+            className="rounded-xl h-9 w-9 text-foreground/80 hover:text-foreground btn-soft"
             onClick={toggleTheme}
             aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
           >
@@ -123,7 +133,7 @@ const Header = () => {
           <Button 
             variant="ghost" 
             size="icon" 
-            className="h-8 w-8" 
+            className="h-9 w-9 rounded-xl btn-soft" 
             onClick={toggleMenu}
           >
             {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -132,7 +142,7 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         <div className={cn(
-          "fixed inset-0 bg-background/95 backdrop-blur-sm z-50 md:hidden transition-transform duration-300",
+          "fixed inset-0 glass-cream z-50 md:hidden transition-transform duration-300",
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         )}>
           <div className="flex flex-col items-center justify-center h-full space-y-6 animate-fade-in">
@@ -140,30 +150,34 @@ const Header = () => {
               variant="ghost"
               size="lg"
               className={cn(
-                "rounded-full transition-all w-48",
-                isActive("/") ? "bg-secondary text-foreground" : "hover:bg-background/80"
+                "rounded-xl btn-soft w-48",
+                isActive("/") 
+                  ? "bg-secondary text-foreground shadow-soft" 
+                  : "hover:bg-secondary/50"
               )}
               asChild
               onClick={toggleMenu}
             >
               <Link to="/" className="flex items-center justify-center space-x-2">
                 <LayoutDashboard className="h-5 w-5" />
-                <span className="text-lg">{t("nav.dashboard")}</span>
+                <span className="text-lg">{language === 'tr' ? 'Ana Sayfa' : 'Dashboard'}</span>
               </Link>
             </Button>
             <Button
               variant="ghost"
               size="lg"
               className={cn(
-                "rounded-full transition-all w-48",
-                isActive("/bookmarks") ? "bg-secondary text-foreground" : "hover:bg-background/80"
+                "rounded-xl btn-soft w-48",
+                isActive("/bookmarks") 
+                  ? "bg-secondary text-foreground shadow-soft" 
+                  : "hover:bg-secondary/50"
               )}
               asChild
               onClick={toggleMenu}
             >
               <Link to="/bookmarks" className="flex items-center justify-center space-x-2">
                 <Bookmark className="h-5 w-5" />
-                <span className="text-lg">{t("nav.bookmarks")}</span>
+                <span className="text-lg">{language === 'tr' ? 'Yer İmleri' : 'Bookmarks'}</span>
               </Link>
             </Button>
             
@@ -171,7 +185,7 @@ const Header = () => {
             <Button
               variant="outline"
               size="lg"
-              className="rounded-full w-48"
+              className="rounded-xl w-48 btn-soft border border-border/50 hover:border-accent/50 hover:bg-accent/20"
               onClick={() => {
                 setLanguage(language === 'en' ? 'tr' : 'en');
                 toggleMenu();

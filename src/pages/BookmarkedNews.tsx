@@ -1,4 +1,3 @@
-
 import { useState, useCallback } from "react";
 import { ArrowLeft, Bookmark } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -7,8 +6,9 @@ import Header from "@/components/Header";
 import SearchBar from "@/components/SearchBar";
 import FilterBar from "@/components/FilterBar";
 import NewsList from "@/components/NewsList";
+import Footer from "@/components/Footer";
 import { useBookmarks } from "@/hooks/useBookmarks";
-import { FilterOptions, NewsItem } from "@/lib/types";
+import { FilterOptions, NewsItem, SentimentType } from "@/lib/types";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const BookmarkedNews = () => {
@@ -16,7 +16,7 @@ const BookmarkedNews = () => {
   const { t } = useLanguage();
   
   const [filters, setFilters] = useState<FilterOptions>({
-    sentiment: "",
+    sentiment: "" as SentimentType,
     source: "",
     period: "",
     search: "",
@@ -109,11 +109,14 @@ const BookmarkedNews = () => {
             <NewsList 
               news={filteredBookmarks} 
               isLoading={false} 
-              className="mb-10"
+              error={null}
             />
           )}
         </div>
       </main>
+      
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

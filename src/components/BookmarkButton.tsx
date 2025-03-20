@@ -1,48 +1,73 @@
-
-import { Bookmark } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect, memo, useCallback } from "react";
 import { useBookmarks } from "@/hooks/useBookmarks";
+import { Bookmark } from "lucide-react";
 import { NewsItem } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { toast } from "sonner";
 
 interface BookmarkButtonProps {
   newsItem: NewsItem;
   className?: string;
-  size?: "sm" | "default";
+  size?: "default" | "sm" | "lg";
 }
 
-const BookmarkButton = ({ newsItem, className, size = "default" }: BookmarkButtonProps) => {
+const BookmarkButton = memo(({ newsItem, className, size = "default" }: BookmarkButtonProps) => {
   const { isBookmarked, toggleBookmark } = useBookmarks();
-  const { t } = useLanguage();
+  const [isAnimating, setIsAnimating] = useState(false);
+  const { language } = useLanguage();
+  
   const bookmarked = isBookmarked(newsItem.id);
-
+  
+  const handleClick = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    
+    try {
+      // Animasyon efekti ekle
+      setIsAnimating(true);
+      setTimeout(() => setIsAnimating(false), 300);
+      
+      // Yer imini değiştir
+      toggleBookmark(newsItem);
+      
+      // Bildirim göster
+      if (bookmarked) {
+        toast.success(language === "tr" ? "Yer imi kaldırıldı" : "Bookmark removed");
+      } else {
+        toast.success(language === "tr" ? "Yer imi eklendi" : "Bookmark added");
+      }
+    } catch (error) {
+      console.error("Error toggling bookmark:", error);
+      toast.error(
+        language === "tr" 
+          ? "Yer imi işlemi sırasında hata oluştu" 
+          : "Error during bookmark operation"
+      );
+    }
+  }, [bookmarked, language, newsItem, toggleBookmark]);
+  
+  const sizeClasses = {
+    sm: "h-7 w-7",
+    default: "h-9 w-9",
+    lg: "h-11 w-11",
+  };
+  
   return (
     <Button
       variant="ghost"
-      size={size === "sm" ? "icon" : "default"}
-      className={cn(
-        "rounded-full transition-all btn-hover", 
-        bookmarked ? "text-primary" : "text-muted-foreground",
-        className
-      )}
-      onClick={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        toggleBookmark(newsItem);
-      }}
-      aria-label={bookmarked ? "Remove from bookmarks" : "Add to bookmarks"}
+      size="icon"
+      onClick={handleClick}
+      className={`rounded-full ${className} ${isAnimating ? 'animate-ping-once' : ''}`}
     >
       <Bookmark 
-        className={cn(
-          "transition-all",
-          size === "sm" ? "h-4 w-4" : "h-5 w-5 mr-2",
-          bookmarked && "fill-current"
-        )} 
+        className={`${sizeClasses[size]} ${bookmarked ? 'fill-primary text-primary' : 'text-gray-500'}`} 
       />
-      {size !== "sm" && <span>{bookmarked ? t("button.bookmarked") : t("button.bookmark")}</span>}
+      <span className="sr-only">{bookmarked ? "Remove bookmark" : "Add bookmark"}</span>
     </Button>
   );
-};
+});
+
+BookmarkButton.displayName = "BookmarkButton";
 
 export default BookmarkButton;
